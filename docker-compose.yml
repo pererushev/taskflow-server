@@ -1,0 +1,87 @@
+services:
+  app:
+    build: .
+    container_name: taskflow-app
+    restart: unless-stopped
+    user: "${UID:-1000}:${GID:-1000}"
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+      - ./storage:/var/www/html/storage
+      - ./bootstrap/cache:/var/www/html/bootstrap/cache
+    networks:
+      - taskflow
+    depends_on:
+      - db
+      - redis
+
+  web:
+    image: nginx:alpine
+    container_name: taskflow-web
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - taskflow
+    depends_on:
+      - app
+
+  db:
+    image: postgres:15-alpine
+    container_name: taskflow-db
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: taskflow
+      POSTGRES_USER: taskflow
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - taskflow
+
+  redis:
+    image: redis:7-alpine
+    container_name: taskflow-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - taskflow
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: taskflow-mailpit
+    restart: unless-stopped
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+    networks:
+      - taskflow
+
+  queue:
+    build: .
+    container_name: taskflow-queue
+    restart: unless-stopped
+    user: "${UID:-1000}:${GID:-1000}"
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    command: php artisan queue:work --sleep=3 --tries=3 --max-time=3600
+    networks:
+      - taskflow
+    depends_on:
+      - db
+      - redis
+
+networks:
+  taskflow:
+    driver: bridge
+
+volumes:
+  db_data:
+  redis_data:
