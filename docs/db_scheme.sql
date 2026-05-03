@@ -1,0 +1,7 @@
+users (id, name, email, email_verified_at, password_hash, created_at, updated_at)
+teams (id, name, owner_id FK→users, created_at, updated_at)
+team_user (team_id FK, user_id FK, role ENUM['owner','admin','member','viewer'], PK(team_id, user_id))
+projects (id, team_id FK, name, description, created_by FK→users, created_at, updated_at)
+tasks (id, project_id FK, creator_id FK→users, assignee_id FK→users, title, description, status ENUM['todo','in_progress','review','done'], priority ENUM['low','medium','high','urgent'], "order" DECIMAL(10,4), due_date TIMESTAMP, created_at, updated_at)
+task_comments (id, task_id FK, user_id FK, content, created_at, updated_at)
+attachments (id, task_id FK, user_id FK, file_path, mime_type, size, created_at)

@@ -1,0 +1,6 @@
+﻿Фаза,Что делаем,Критерий готовности
+1. Фундамент,"Docker Compose (app, pg, redis, mailpit), установка L11, Sanctum, базовая авторизация, ".env.example", линтеры (PHPStan, Pint)",docker compose up" поднимает всё, "php artisan sanctum:api-token" работает, линтеры зелёные"
+2. Домен & API,"Миграции, модели, отношения, Policies, CRUD для "teams", "projects", "tasks", API Resources, валидация через FormRequest","Postman-коллекция проходит 100%, RBAC блокирует доступ вне команды"
+3. Kanban & Real-time,Дробный order" (decimal), обновление порядка через API, события "TaskMoved", broadcast в "team.{id},"Drag&Drop на фронте вызывает 1 запрос, доска обновляется у всех в реальном времени"
+4. Очереди & Файлы,"Загрузка вложений (Flysystem), Job экспорта CSV/PDF, Horizon, уведомления","Экспорт уходит в очередь, возвращается ссылка на скачивание, ошибки логируются"
+5. Тесты & CI/CD,"Pest (Unit: DTO/Services, Feature: API/Policy/Queue), GitHub Actions (lint → test → build), "DEPLOYMENT.md,"Coverage ≥65%, пайплайн зелёный, деплой по "main

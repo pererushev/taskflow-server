@@ -1,0 +1,6 @@
+﻿Задача,Решение
+Drag & Drop порядок,order типа "DECIMAL(10,4)". При перемещении между карточками: (left + right) / 2. Раз в месяц нормализация джобом.
+RBAC без пакетов,TeamPolicy::view()", "TaskPolicy::update(). Middleware проверяет team_user + role. В API Resources скрываем поля по роли.
+Real-time,"broadcastOn() => new Channel(""team.{$this->task->project->team_id}"")". Laravel Echo на фронте подписывается на team.${id}.
+Безопасность,"CSRF не нужен (API token), но валидация всех полей, rate limiting ("throttle:api"), запрет mass assignment, явные "fillable/guarded.
+Оптимизация,with()" для N+1, частичные индексы, пагинация "cursor()" для бесконечного скролла, кэш "team:{id}:members на 5 мин.

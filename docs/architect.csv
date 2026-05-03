@@ -1,0 +1,10 @@
+﻿Слой,Решение,Обоснование
+Backend,"Laravel 11, PHP 8.3+","Современный, строгая типизация, встроенный Reverb для WS"
+DB,PostgreSQL 15+,"JSONB, частичные индексы, надёжные транзакции"
+Auth,Laravel Sanctum (token-based),"Идеально для SPA, простая интеграция, refresh-токены"
+RBAC,Native Policies + team_user.role,"Без лишних пакетов, показывает знание ядра Laravel"
+Real-time,Laravel Reverb + Laravel Echo,"Встроен в L11, не требует внешних сервисов для демо"
+Очереди,Redis + Horizon,"Прозрачный мониторинг джобов, graceful retry"
+Файлы,Flysystem → Local/S3 (R2),"Абстракция, легкая смена провайдера"
+Тесты,Pest PHP,"Современный синтаксис, нативная поддержка в L11"
+API,REST v1 (/api/v1/) + API Resources,"Стандартизированные ответы, пагинация, фильтрация"
